@@ -6,8 +6,10 @@ import Customer from "../Customer/Customer";
 function Login(props) {
   let [uname, setUname] = useState("");
   let [password, setPass] = useState("");
-  let [isUserAuthenticated, setUserAuthenticated] = useState(false);
-  let [isAdmin, setAdmin] = useState(false);
+  let [isUserAuthenticated, setUserAuthenticated] = useState(
+    localStorage.getItem("isUserAuthenticated") || false
+  );
+  let [isAdmin, setAdmin] = useState(localStorage.getItem("isAdmin") || false);
 
   function handleClick() {
     if (uname && password) {
@@ -22,14 +24,14 @@ function Login(props) {
           if (res.data.length > 0) {
             console.log("Logged in successfully");
             setUserAuthenticated(true);
-            localStorage.setItem(isUserAuthenticated, true);
+            localStorage.setItem("isUserAuthenticated", true);
             const user = res.data[0].isAdmin;
             if (user) {
               setAdmin(true);
             } else {
               setAdmin(false);
             }
-            // localStorage.setItem(isAdmin, true);
+            localStorage.setItem("isAdmin", user ? true : false);
           } else {
             console.log("User not available");
             setUserAuthenticated(false);

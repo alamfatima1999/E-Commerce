@@ -16,7 +16,7 @@ const Admin = () => {
         setProducts(data);
       })
       .catch((err) => console.log("Couldn't receive list"));
-  });
+  }, []);
 
   const addProduct = () => {
     let name = productName;
@@ -69,12 +69,13 @@ const Admin = () => {
             <th>Price</th>
             <th>Created Date</th>
             <th></th>
+            <th></th>
           </tr>
 
           {products.map((product) => {
             return (
-              <div>
-                <tr>
+              <>
+                <tr key={product.productId}>
                   <td>{product.productId}</td>
                   <td>{product.name}</td>
                   <td>{product.price}</td>
@@ -86,7 +87,7 @@ const Admin = () => {
                     <button>Delete</button>
                   </td>
                 </tr>
-              </div>
+              </>
             );
           })}
         </table>
