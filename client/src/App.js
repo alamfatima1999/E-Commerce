@@ -1,28 +1,27 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
-import Login from "./components/Login";
-import Register from "./components/Register";
+import Login from "./components/Login/Login";
+import Register from "./components/Register/Register";
 
 function App() {
   let [user, setUser] = useState(false);
   let [isRegistered, setRegisteredUser] = useState(true);
-  // let [isRegisteredUser, setIsRegisteredUser] = useState(true);
 
-  const updateUserChoice = () => {
-    setRegisteredUser(!isRegistered);
-  }
-
-  const registerCallback = () => {
+  const navigateToLoginPage = () => {
     setRegisteredUser(true);
-  }
-
+  };
+  const navigateToRegisterPage = () => {
+    setRegisteredUser(false);
+  };
   return (
     <>
-      <div>{isRegistered ? <Login /> : <Register registerCallback = {registerCallback} />}</div>
-      {/* <div>{isRegistered? <button onClick={handleReg}>New user?</button>: <button onClick={handleLogin}>Register</button>}</div> */}
       <div>
-        {isRegistered  ? <div onClick={()=>updateUserChoice()}> Is New User </div> : <div onClick={()=>updateUserChoice()}> Already Registered User </div>}
+        {isRegistered ? (
+          <Login navigateToRegisterPage={navigateToRegisterPage} />
+        ) : (
+          <Register navigateToLoginPage={navigateToLoginPage} />
+        )}
       </div>
     </>
   );

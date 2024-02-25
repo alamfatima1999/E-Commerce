@@ -20,9 +20,9 @@ function Register(props) {
       axios
         .post("http://localhost:3001/register", { ...newUser })
         .then((res) => {
-          if (res.data != null){
+          if (res.data != null) {
             console.log("User registered successfully");
-            props.registerCallback();
+            props.navigateToLoginPage();
           }
         })
         .catch((err) => console.log("Sorry unable to add new user"));
@@ -34,7 +34,7 @@ function Register(props) {
   const updateAdmin = (adminValue) => {
     console.log(adminValue);
     setAdmin(adminValue);
-  }
+  };
 
   return (
     <>
@@ -97,6 +97,9 @@ function Register(props) {
       </div>
       <div>
         <button onClick={handleUserRegisteration}>Register</button>
+      </div>
+      <div onClick={() => props.navigateToLoginPage()}>
+        Already Logged In User
       </div>
     </>
   );
