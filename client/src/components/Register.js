@@ -1,13 +1,12 @@
-import React, { Component, useState } from "react";
-import Login from "./Login";
+import { useState } from "react";
 import axios from "axios";
 
-function Register() {
+function Register(props) {
   let [email, setEmail] = useState("");
   let [fname, setFname] = useState("");
   let [lname, setLname] = useState("");
   let [pass, setPass] = useState("");
-  let [isAdmin, setAdmin] = useState("0");
+  const [isAdmin, setAdmin] = useState("0");
 
   const handleUserRegisteration = () => {
     const newUser = {
@@ -17,17 +16,19 @@ function Register() {
       fname: fname,
       lname: lname,
     };
-    console.log(...newUser);
-    // if (email && pass && fname) {
-    //   axios
-    //     .post("http://localhost:3001/register", { ...newUser })
-    //     .then((res) => {
-    //       if (res.data.length > 0) console.log("User registered successfully");
-    //     })
-    //     .catch((err) => console.log("Sorry uable to add ew user"));
-    // }else{
-    //   console.log("Please fill the required fields");
-    // }
+    if (email != "" && pass != "" && fname != "" && lname != "") {
+      axios
+        .post("http://localhost:3001/register", { ...newUser })
+        .then((res) => {
+          if (res.data != null){
+            console.log("User registered successfully");
+            props.registerCallback();
+          }
+        })
+        .catch((err) => console.log("Sorry unable to add new user"));
+    } else {
+      console.log("Please fill the required fields");
+    }
   };
 
   const updateAdmin = (adminValue) => {
@@ -65,7 +66,7 @@ function Register() {
       <div>
         <label>Password</label>
         <input
-          type="text"
+          type="password"
           value={pass}
           onChange={(e) => setPass(e.target.value)}
         ></input>
@@ -73,24 +74,25 @@ function Register() {
       <div>
         <input
           type="radio"
-          id="pov"
-          name="pov"
-          // value={isAdmin}
+          id="customer"
+          name="role"
+          value="0"
+          checked={isAdmin === "0"}
           onChange={() => updateAdmin("0")}
-          checked
-        ></input>
-          <label htmlFor="pov">Customer</label>
-        <br></br>
+        />
+        <label htmlFor="customer">Customer</label>
+        <br />
       </div>
       <div>
         <input
           type="radio"
-          id="pov"
-          name="pov"
-          // value={isAdmin}
+          id="admin"
+          name="role"
+          value="1"
+          checked={isAdmin === "1"}
           onChange={() => updateAdmin("1")}
-        ></input>
-          <label htmlFor="pov">Admin</label>
+        />
+        <label htmlFor="admin">Admin</label>
         <br />
       </div>
       <div>

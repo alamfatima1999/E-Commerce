@@ -13,10 +13,13 @@ function App() {
     setRegisteredUser(!isRegistered);
   }
 
+  const registerCallback = () => {
+    setRegisteredUser(true);
+  }
 
   return (
     <>
-      <div>{isRegistered ? <Login /> : <Register />}</div>
+      <div>{isRegistered ? <Login /> : <Register registerCallback = {registerCallback} />}</div>
       {/* <div>{isRegistered? <button onClick={handleReg}>New user?</button>: <button onClick={handleLogin}>Register</button>}</div> */}
       <div>
         {isRegistered  ? <div onClick={()=>updateUserChoice()}> Is New User </div> : <div onClick={()=>updateUserChoice()}> Already Registered User </div>}
