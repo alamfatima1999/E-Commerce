@@ -3,7 +3,7 @@ import axios from "axios";
 import ProductList from "../ProductList/ProductList";
 import OrderList from "../OrderList/OrderList";
 
-const Admin = () => {
+const Admin = (props) => {
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState(0);
   const [productDesc, setProductDesc] = useState("");
@@ -63,7 +63,13 @@ const Admin = () => {
           </button>
         )}
       </div>
-      <div>{showProductList ? <ProductList /> : <OrderList />}</div>
+      <div>
+        {showProductList ? (
+          <ProductList handleProductDetails={props.handleProductDetails} />
+        ) : (
+          <OrderList />
+        )}
+      </div>
     </>
   );
 };

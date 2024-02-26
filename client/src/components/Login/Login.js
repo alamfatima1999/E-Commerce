@@ -2,6 +2,7 @@ import React, { Component, useState } from "react";
 import axios from "axios";
 import Admin from "../Admin/Admin";
 import Customer from "../Customer/Customer";
+import AdminContainer from "../Admin/AdminContainer";
 
 function Login(props) {
   let [uname, setUname] = useState("");
@@ -80,7 +81,7 @@ function Login(props) {
           </div>
         </>
       ) : isAdmin ? (
-        <Admin />
+        <AdminContainer />
       ) : (
         <Customer />
       )}
