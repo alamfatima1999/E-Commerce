@@ -1,22 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import ProductList from "../ProductList/ProductList";
+import OrderList from "../OrderList/OrderList";
 
 const Admin = () => {
-  const [products, setProducts] = useState([]);
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState(0);
   const [productDesc, setProductDesc] = useState("");
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/")
-      .then((res) => {
-        const data = res.data;
-        console.log(data);
-        setProducts(data);
-      })
-      .catch((err) => console.log("Couldn't receive list"));
-  }, []);
+  const [showProductList, setshowProductList] = useState(true);
 
   const addProduct = () => {
     let name = productName;
@@ -62,36 +53,17 @@ const Admin = () => {
         <button onClick={addProduct}>Add Product</button>
       </div>
       <div>
-        <table>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Created Date</th>
-            <th></th>
-            <th></th>
-          </tr>
-
-          {products.map((product) => {
-            return (
-              <>
-                <tr key={product.productId}>
-                  <td>{product.productId}</td>
-                  <td>{product.name}</td>
-                  <td>{product.price}</td>
-                  <td>{product.createdDate}</td>
-                  <td>
-                    <button>Details</button>
-                  </td>
-                  <td>
-                    <button>Delete</button>
-                  </td>
-                </tr>
-              </>
-            );
-          })}
-        </table>
+        {showProductList ? (
+          <button onClick={() => setshowProductList(false)}>
+            Get Order List
+          </button>
+        ) : (
+          <button onClick={() => setshowProductList(true)}>
+            Get Product List
+          </button>
+        )}
       </div>
+      <div>{showProductList ? <ProductList /> : <OrderList />}</div>
     </>
   );
 };

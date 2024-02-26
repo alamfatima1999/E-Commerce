@@ -7,9 +7,11 @@ function Login(props) {
   let [uname, setUname] = useState("");
   let [password, setPass] = useState("");
   let [isUserAuthenticated, setUserAuthenticated] = useState(
-    localStorage.getItem("isUserAuthenticated") || false
+    sessionStorage.getItem("isUserAuthenticated") || false
   );
-  let [isAdmin, setAdmin] = useState(localStorage.getItem("isAdmin") || false);
+  let [isAdmin, setAdmin] = useState(
+    sessionStorage.getItem("isAdmin") || false
+  );
 
   function handleClick() {
     if (uname && password) {
@@ -24,14 +26,14 @@ function Login(props) {
           if (res.data.length > 0) {
             console.log("Logged in successfully");
             setUserAuthenticated(true);
-            localStorage.setItem("isUserAuthenticated", true);
+            sessionStorage.setItem("isUserAuthenticated", true);
             const user = res.data[0].isAdmin;
             if (user) {
               setAdmin(true);
             } else {
               setAdmin(false);
             }
-            localStorage.setItem("isAdmin", user ? true : false);
+            sessionStorage.setItem("isAdmin", user ? true : false);
           } else {
             console.log("User not available");
             setUserAuthenticated(false);
