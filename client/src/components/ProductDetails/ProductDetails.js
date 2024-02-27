@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const ProductDetails = (props) => {
-  const { productId, name, price, description } = props.product;
+  const { createdDate, description, name, price, productId } = props.product;
   const [id, setId] = useState(productId);
   const [product, setProduct] = useState(props.product);
   const [productName, setProductName] = useState(name);
@@ -20,7 +20,7 @@ const ProductDetails = (props) => {
         setProductDesc(data.description);
       })
       .catch((err) => console.log("Sorry couldn't fetch details"));
-  });
+  }, []);
 
   const saveProduct = () => {
     const productData = {
