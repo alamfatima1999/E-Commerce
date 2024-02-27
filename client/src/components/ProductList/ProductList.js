@@ -5,7 +5,7 @@ import ProductDetails from "../ProductDetails/ProductDetails";
 
 const ProductList = (props) => {
   const [products, setProducts] = useState([]);
-  const [showProductDetails, setProductDetails] = useState(false);
+  // const [showProductDetails, setProductDetails] = useState(false);
 
   useEffect(() => {
     axios
@@ -19,13 +19,13 @@ const ProductList = (props) => {
   }, []);
 
   const openProductDetails = (product) => {
-    setProductDetails(true);
+    // setProductDetails(true);
     props.handleProductDetails(product);
   };
 
   return (
     <>
-      {!showProductDetails ? (
+      {
         <div>
           <div>
             <h1>Product List</h1>
@@ -66,7 +66,7 @@ const ProductList = (props) => {
             })}
           </table>
         </div>
-      ) : null}
+      }
     </>
   );
 };

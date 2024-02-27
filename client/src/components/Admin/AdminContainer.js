@@ -12,7 +12,7 @@ const AdminContainer = () => {
   return (
     <div>
       {selectedProduct ? (
-        <ProductDetailsPage product={selectedProduct} />
+        <ProductDetailsPage productId={selectedProduct.productId} />
       ) : (
         <Admin handleProductDetails={handleProductDetails} />
       )}
