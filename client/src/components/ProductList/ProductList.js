@@ -8,6 +8,25 @@ const ProductList = (props) => {
   // const [showProductDetails, setProductDetails] = useState(false);
 
   useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const openProductDetails = (product) => {
+    // setProductDetails(true);
+    props.handleProductDetails(product);
+  };
+
+  const deleteProduct = (productId) => {
+    axios
+      .delete("http://localhost:3001/delete/product/" + productId)
+      .then((res) => {
+        console.log("Deletion sucessful");
+        fetchProducts();
+      })
+      .catch((err) => console.log("Error"));
+  };
+
+  const fetchProducts = () => {
     axios
       .get("http://localhost:3001/")
       .then((res) => {
@@ -16,11 +35,6 @@ const ProductList = (props) => {
         setProducts(data);
       })
       .catch((err) => console.log("Couldn't receive list"));
-  }, []);
-
-  const openProductDetails = (product) => {
-    // setProductDetails(true);
-    props.handleProductDetails(product);
   };
 
   return (
@@ -58,7 +72,9 @@ const ProductList = (props) => {
                       </button>
                     </td>
                     <td>
-                      <button>Delete</button>
+                      <button onClick={() => deleteProduct(product.productId)}>
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 </>

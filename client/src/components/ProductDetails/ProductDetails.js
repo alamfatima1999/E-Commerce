@@ -4,7 +4,7 @@ import axios from "axios";
 const ProductDetails = (props) => {
   // const { productId } = props.product;
   const [id, setId] = useState(props.productId);
-  const [productDetails, setProductDetails] = useState(false);
+  const [productDetails, setProductDetails] = useState(true);
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState(0);
   const [productDesc, setProductDesc] = useState("");
@@ -16,9 +16,9 @@ const ProductDetails = (props) => {
       .then((res) => {
         console.log(res);
         let data = res.data;
-        setProductName(data.name);
-        setProductPrice(data.price);
-        setProductDesc(data.description);
+        setProductName(data[0].name);
+        setProductPrice(data[0].price);
+        setProductDesc(data[0].description);
         setProductDetails(true);
       })
       .catch((err) => {
