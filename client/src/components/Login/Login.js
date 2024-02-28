@@ -12,6 +12,7 @@ function Login(props) {
   let [isAdmin, setAdmin] = useState(
     sessionStorage.getItem("isAdmin") || false
   );
+  let [customerId, setCustomerId] = useState(null);
 
   function handleClick() {
     if (uname && password) {
@@ -32,6 +33,7 @@ function Login(props) {
               setAdmin(true);
             } else {
               setAdmin(false);
+              setCustomerId(res.data[0].userId);
             }
             sessionStorage.setItem("isAdmin", user ? true : false);
           } else {
@@ -82,7 +84,7 @@ function Login(props) {
       ) : isAdmin ? (
         <AdminContainer />
       ) : (
-        <Customer />
+        <Customer customerId={customerId} />
       )}
     </>
   );
