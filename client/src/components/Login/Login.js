@@ -1,6 +1,5 @@
 import React, { Component, useState } from "react";
 import axios from "axios";
-import Admin from "../Admin/Admin";
 import Customer from "../Customer/Customer";
 import AdminContainer from "../Admin/AdminContainer";
 

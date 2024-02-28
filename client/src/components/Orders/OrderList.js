@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 
-const OrderList = () => {
+const OrderList = (props) => {
   const [orders, setorders] = useState([]);
 
   useEffect(() => {
@@ -15,6 +15,10 @@ const OrderList = () => {
       })
       .catch((err) => console.log("Couldn't receive order list"));
   }, []);
+
+  const openOrderDetails = (order) => {
+    props.handleOrderDetails(order);
+  };
 
   return (
     <div>
@@ -39,7 +43,13 @@ const OrderList = () => {
                 <td>{order.createdDate}</td>
                 <td>{order.totalPrice}</td>
                 <td>
-                  <button>Details</button>
+                  <button
+                    onClick={() => {
+                      openOrderDetails(order);
+                    }}
+                  >
+                    Details
+                  </button>
                 </td>
               </tr>
             </>

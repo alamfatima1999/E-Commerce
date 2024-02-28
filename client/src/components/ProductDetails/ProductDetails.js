@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import OrdersByProductId from "../Orders/OrdersByProductId";
 
 const ProductDetails = (props) => {
   // const { productId } = props.product;
@@ -8,7 +9,7 @@ const ProductDetails = (props) => {
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState(0);
   const [productDesc, setProductDesc] = useState("");
-  const [createdDate, setCreatedDate] = useState("");
+  // const [createdDate, setCreatedDate] = useState("");
 
   useEffect(() => {
     axios
@@ -78,6 +79,8 @@ const ProductDetails = (props) => {
           <button onClick={(e) => saveProduct()}>Save</button>
         </div>
       ) : null}
+
+      <OrdersByProductId productId={id} />
     </>
   );
 };
