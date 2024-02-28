@@ -68,6 +68,7 @@ const OrderDetails = (props) => {
                 {productsInOrder.map((product) => {
                   return (
                     <tr key={product.productId}>
+                      <td>{product.productId}</td>
                       <td>{product.name}</td>
                       <td>{product.quantity}</td>
                       <td>{product.totalPrice}</td>
