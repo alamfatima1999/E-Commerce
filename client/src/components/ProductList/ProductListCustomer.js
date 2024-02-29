@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import ShopingCart from "../ShopingCart/ShopingCart";
 
 const ProductListCustomer = (props) => {
   const [productList, setProductList] = useState([]);
-  const [cartProduct, setCartProduct] = useState(null);
+  // const [cartProduct, setCartProduct] = useState(null);
   const [productQuantity, setProductQuantity] = useState(0);
+  const [cartProducts, setCartProducts] = useState([]);
 
   const addToCart = (product) => {
-    setCartProduct({ ...product, productQuantity });
-    props.addProductToCart(cartProduct);
+    const updatedProduct = { ...product, quantity: productQuantity };
+    setCartProducts([...cartProducts, updatedProduct]);
   };
 
   useEffect(() => {
@@ -47,6 +49,7 @@ const ProductListCustomer = (props) => {
                     <td>
                       <input
                         type="number"
+                        value={productQuantity}
                         min="0"
                         placeholder="Quantity"
                         onChange={(e) => setProductQuantity(e.target.value)}
@@ -68,6 +71,7 @@ const ProductListCustomer = (props) => {
           </table>
         </div>
       }
+      <ShopingCart cartProducts={cartProducts} />
     </>
   );
 };

@@ -5,13 +5,6 @@ import ShopingCart from "../ShopingCart/ShopingCart";
 
 const Customer = (props) => {
   const [isProductsActive, setIsProductsActive] = useState(true);
-  const [cartProducts, setCartProducts] = useState([]);
-
-  const addProductToCart = (product) => {
-    setCartProducts((prev) => {
-      [...prev, product];
-    });
-  };
 
   const changeList = () => {
     setIsProductsActive(!isProductsActive);
@@ -22,9 +15,8 @@ const Customer = (props) => {
       <div>
         {isProductsActive ? (
           <>
-            <ProductListCustomer addProductToCart={addProductToCart} />{" "}
+            <ProductListCustomer />
             <button onClick={changeList}>Get My Past Orders</button>
-            <ShopingCart cartProducts={cartProducts} />
           </>
         ) : (
           <>
