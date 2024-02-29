@@ -35,6 +35,7 @@ const CustomerOrders = (props) => {
             return (
               <>
                 <tr key={order.orderId}>
+                  <td>{order.orderId}</td>
                   <td>{order.name}</td>
                   <td>{order.createdDate}</td>
                   <td>{order.quantity}</td>

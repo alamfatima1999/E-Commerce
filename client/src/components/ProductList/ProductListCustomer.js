@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const ProductListCustomer = () => {
+const ProductListCustomer = (props) => {
   const [productList, setProductList] = useState([]);
+  const [cartProduct, setCartProduct] = useState(null);
+  const [productQuantity, setProductQuantity] = useState(0);
 
   const addToCart = (product) => {
-    console.log("Added to cart");
+    setCartProduct({ ...product, productQuantity });
+    props.addProductToCart(cartProduct);
   };
 
   useEffect(() => {
@@ -46,7 +49,7 @@ const ProductListCustomer = () => {
                         type="number"
                         min="0"
                         placeholder="Quantity"
-                        onChange={(e) => e.target.value}
+                        onChange={(e) => setProductQuantity(e.target.value)}
                       ></input>
                     </td>
                     <td>

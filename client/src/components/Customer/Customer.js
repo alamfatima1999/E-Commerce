@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from "react";
 import ProductListCustomer from "../ProductList/ProductListCustomer";
 import CustomerOrders from "./CustomerOrders";
+import ShopingCart from "../ShopingCart/ShopingCart";
 
 const Customer = (props) => {
   const [isProductsActive, setIsProductsActive] = useState(true);
+  const [cartProducts, setCartProducts] = useState([]);
+
+  const addProductToCart = (product) => {
+    setCartProducts((prev) => {
+      [...prev, product];
+    });
+  };
 
   const changeList = () => {
     setIsProductsActive(!isProductsActive);
@@ -14,8 +22,9 @@ const Customer = (props) => {
       <div>
         {isProductsActive ? (
           <>
-            <ProductListCustomer />{" "}
+            <ProductListCustomer addProductToCart={addProductToCart} />{" "}
             <button onClick={changeList}>Get My Past Orders</button>
+            <ShopingCart cartProducts={cartProducts} />
           </>
         ) : (
           <>
