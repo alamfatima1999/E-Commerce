@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ShopingCart = (props) => {
+const ShoppingCart = (props) => {
   const [cartProducts, setCartProducts] = useState(props.cartProducts);
 
   //   const buyProducts = () => {};
@@ -12,16 +12,18 @@ const ShopingCart = (props) => {
   return (
     <>
       <div>
-        <h1>Shoping Cart</h1>
+        <h1>Shopping Cart</h1>
       </div>
       <div>
         {cartProducts.map((product) => {
-          <div>
-            <input type="text" value={product.name}></input>
-            <input type="text" value={product.quantity}></input>
-            <input type="text" value={product.price * product.quantity}></input>
-            <button onClick={removeProduct}>Remove</button>
-          </div>;
+          return (
+            <>
+              <h4>{product.name}</h4>
+              <h4>{product.quantity}</h4>
+              <h4>{product.price * product.quantity}</h4>
+              <button onClick={removeProduct}>Remove</button>
+            </>
+          );
         })}
       </div>
       <div>
@@ -31,4 +33,4 @@ const ShopingCart = (props) => {
     </>
   );
 };
-export default ShopingCart;
+export default ShoppingCart;

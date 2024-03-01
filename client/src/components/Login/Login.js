@@ -7,10 +7,10 @@ function Login(props) {
   let [uname, setUname] = useState("");
   let [password, setPass] = useState("");
   let [isUserAuthenticated, setUserAuthenticated] = useState(
-    sessionStorage.getItem("isUserAuthenticated") || false
+    sessionStorage.getItem("isUserAuthenticated") === "true" || false
   );
   let [isAdmin, setAdmin] = useState(
-    sessionStorage.getItem("isAdmin") || false
+    sessionStorage.getItem("isAdmin") === "true" || false
   );
   let [customerId, setCustomerId] = useState(null);
 

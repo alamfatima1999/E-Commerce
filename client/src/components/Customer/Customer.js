@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ProductListCustomer from "../ProductList/ProductListCustomer";
 import CustomerOrders from "./CustomerOrders";
-import ShopingCart from "../ShopingCart/ShopingCart";
+import ShopingCart from "../ShopingCart/ShoppingCart";
 
 const Customer = (props) => {
   const [isProductsActive, setIsProductsActive] = useState(true);
