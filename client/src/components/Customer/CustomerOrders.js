@@ -3,7 +3,7 @@ import axios from "axios";
 
 const CustomerOrders = (props) => {
   const [pastOrders, setPastOrders] = useState([]);
-  const customerId = props.customerId;
+  const customerId = sessionStorage.getItem("customerId");
 
   useEffect(() => {
     axios

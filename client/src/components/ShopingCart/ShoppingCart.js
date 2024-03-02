@@ -4,29 +4,24 @@ import axios from "axios";
 const ShoppingCart = (props) => {
   const [cartProducts, setCartProducts] = useState(props.cartProducts);
   const customerId = sessionStorage.getItem("customerId");
+  const [address, setAddress] = useState(null);
 
   //   const buyProducts = () => {};
 
-  useEffect(() => {
-    setCartProducts(props.cartProducts);
-  }, [props.cartProducts]);
+  // useEffect(() => {
+  //   setCartProducts(props.cartProducts);
+  // }, [props.cartProducts]);
 
-  const removeProduct = (productId, customerId) => {
+  useEffect(() => {
     axios
-      .delete(
-        "http://localhost:3001/remove/from/cart/" + productId + "/" + customerId
-      )
+      .get("http://localhost:3001/shopping/cart/" + customerId)
       .then((res) => {
-        console.log("Deleted successfully");
-        let updatedCartList = cartProducts.filter((product) => {
-          return product.productId != productId;
-        });
-        setCartProducts(updatedCartList);
+        console.log(res.data);
+        let productsInCart = res.data;
+        setCartProducts(productsInCart);
       })
-      .catch((err) => {
-        console.log("Error occurred");
-      });
-  };
+      .catch((err) => console.log("Error occurred"));
+  }, [props.cartProducts]);
 
   return (
     <>
@@ -41,9 +36,7 @@ const ShoppingCart = (props) => {
                 <h4>{product.name}</h4>
                 <h4>{product.quantity}</h4>
                 <h4>{product.price * product.quantity}</h4>
-                <button
-                  onClick={() => removeProduct(product.productId, customerId)}
-                >
+                <button onClick={() => props.removeProduct(product.productId)}>
                   Remove
                 </button>
               </div>
@@ -52,7 +45,16 @@ const ShoppingCart = (props) => {
         })}
       </div>
       <div>
-        <input type="text" placeholder="Address:"></input>
+        <input
+          type="text"
+          placeholder="Address:"
+          onChange={() => {
+            props.updateAddress(address);
+          }}
+        ></input>
+      </div>
+      <div>
+        <button onClick={props.buyProducts}>Buy</button>
       </div>
     </>
   );

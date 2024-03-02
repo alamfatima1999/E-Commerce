@@ -6,33 +6,7 @@ const ProductListCustomer = (props) => {
   const [productList, setProductList] = useState([]);
   const [cartProducts, setCartProducts] = useState([]);
   const customerId = sessionStorage.getItem("customerId");
-
-  const addToCart = (product) => {
-    if (product.quantity > 0) {
-      let flag = false;
-      let updatedCartList = cartProducts.map((productInCart) => {
-        if (productInCart.productId == product.productId) {
-          productInCart.quantity = product.quantity;
-          flag = true;
-        }
-        return productInCart;
-      });
-      let productId = product.productId;
-      let quantity = product.quantity;
-      // let customerId = props.customerId;
-      let updatedProduct = { customerId, productId, quantity, flag };
-
-      axios
-        .post("http://localhost:3001/add/to/cart", { ...updatedProduct })
-        .then((res) => {
-          if (flag === false) {
-            updatedCartList = [...cartProducts, { ...product }];
-          }
-          setCartProducts(updatedCartList);
-        })
-        .catch((res) => console.log("Error"));
-    }
-  };
+  const [address, setAddress] = useState("");
 
   useEffect(() => {
     axios
@@ -47,6 +21,57 @@ const ProductListCustomer = (props) => {
       .catch((err) => console.log("Error"));
   }, []);
 
+  const addToCart = (product) => {
+    if (product.quantity > 0) {
+      let flag = false;
+      let updatedCartList = cartProducts.map((productInCart) => {
+        if (productInCart.productId == product.productId) {
+          productInCart.quantity = product.quantity;
+          // product.quantity = 0;
+          flag = true;
+        }
+        return productInCart;
+      });
+      let productId = product.productId;
+      let quantity = product.quantity;
+      // let customerId = props.customerId;
+      let updatedProduct = { customerId, productId, quantity, flag };
+      console.log("Updated Product", updatedProduct);
+      axios
+        .post("http://localhost:3001/add/to/cart", { ...updatedProduct })
+        .then((res) => {
+          if (flag === false) {
+            updatedCartList = [...cartProducts, { ...product }];
+          }
+          setCartProducts(updatedCartList);
+          // product.quantity = 0;
+          const updatedProductList = productList.map((product) => ({
+            ...product,
+            quantity: 0,
+          }));
+          setProductList(updatedProductList);
+        })
+        .catch((res) => console.log("Error"));
+    }
+  };
+
+  const removeProduct = (productId) => {
+    axios
+      .delete(
+        "http://localhost:3001/remove/from/cart/" + productId + "/" + customerId
+      )
+      .then((res) => {
+        console.log("Deleted successfully");
+        let updatedCartList = cartProducts.filter((product) => {
+          return product.productId != productId;
+        });
+        setCartProducts(updatedCartList);
+      })
+      .catch((err) => {
+        console.log("Error occurred");
+      });
+  };
+
   const updateProductQuantity = (e, productId) => {
     const updatedList = productList.map((product) => {
       if (product.productId == productId) {
@@ -55,6 +80,25 @@ const ProductListCustomer = (props) => {
       return product;
     });
     setProductList(updatedList);
+  };
+
+  const buyProducts = () => {
+    if (address != null) {
+      let customerPayload = { customerId, address };
+
+      axios
+        .post("http://localhost:3001/buy", { ...customerPayload })
+        .then((res) => {
+          setCartProducts([]);
+          alert("order placed successfully");
+        });
+    } else {
+      alert("Please enter your address");
+    }
+  };
+
+  const updateAddress = (updatedAddress) => {
+    setAddress(updatedAddress);
   };
 
   return (
@@ -110,7 +154,12 @@ const ProductListCustomer = (props) => {
           </table>
         </div>
       }
-      <ShoppingCart cartProducts={cartProducts} customerId={customerId} />
+      <ShoppingCart
+        cartProducts={cartProducts}
+        removeProduct={removeProduct}
+        buyProducts={buyProducts}
+        updateAddress={updateAddress}
+      />
     </>
   );
 };

@@ -34,7 +34,7 @@ function Login(props) {
             } else {
               setAdmin(false);
               setCustomerId(res.data[0].userId);
-              sessionStorage.setItem("customerId", customerId);
+              sessionStorage.setItem("customerId", res.data[0].userId);
             }
             sessionStorage.setItem("isAdmin", user ? true : false);
           } else {

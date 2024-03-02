@@ -14,12 +14,12 @@ const Customer = (props) => {
       <div>
         {isProductsActive ? (
           <>
-            <ProductListCustomer customerId={props.customerId} />
+            <ProductListCustomer />
             <button onClick={changeList}>Get My Past Orders</button>
           </>
         ) : (
           <>
-            <CustomerOrders customerId={props.customerId} />
+            <CustomerOrders />
             <button onClick={changeList}>Product List</button>
           </>
         )}
