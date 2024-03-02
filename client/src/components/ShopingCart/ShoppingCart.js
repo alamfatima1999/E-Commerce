@@ -1,12 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const ShoppingCart = (props) => {
   const [cartProducts, setCartProducts] = useState(props.cartProducts);
+  const customerId = sessionStorage.getItem("customerId");
 
   //   const buyProducts = () => {};
 
-  const removeProduct = () => {
-    console.log("Product removed");
+  useEffect(() => {
+    setCartProducts(props.cartProducts);
+  }, [props.cartProducts]);
+
+  const removeProduct = (productId, customerId) => {
+    axios
+      .delete(
+        "http://localhost:3001/remove/from/cart/" + productId + "/" + customerId
+      )
+      .then((res) => {
+        console.log("Deleted successfully");
+        let updatedCartList = cartProducts.filter((product) => {
+          return product.productId != productId;
+        });
+        setCartProducts(updatedCartList);
+      })
+      .catch((err) => {
+        console.log("Error occurred");
+      });
   };
 
   return (
@@ -18,17 +37,22 @@ const ShoppingCart = (props) => {
         {cartProducts.map((product) => {
           return (
             <>
-              <h4>{product.name}</h4>
-              <h4>{product.quantity}</h4>
-              <h4>{product.price * product.quantity}</h4>
-              <button onClick={removeProduct}>Remove</button>
+              <div key={product.productId}>
+                <h4>{product.name}</h4>
+                <h4>{product.quantity}</h4>
+                <h4>{product.price * product.quantity}</h4>
+                <button
+                  onClick={() => removeProduct(product.productId, customerId)}
+                >
+                  Remove
+                </button>
+              </div>
             </>
           );
         })}
       </div>
       <div>
         <input type="text" placeholder="Address:"></input>
-        {/* <button onClick={buyProducts}>Buy</button> */}
       </div>
     </>
   );

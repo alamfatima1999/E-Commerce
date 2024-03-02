@@ -2,18 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const OrderDetails = (props) => {
-  const [orderId, setOrderId] = useState(props.orderId);
+  const orderId = props.orderId;
   const [order, setOrder] = useState({});
   const [productsInOrder, setProductsInOrder] = useState([]);
-  const [orderDetails, setOrderDetails] = useState(false);
 
   useEffect(() => {
     axios
       .get("http://localhost:3001/order/detail/" + orderId)
       .then((res) => {
         setOrder(res.data[0]);
-        // setOrderDetails(true);
-        // console.log(order);
       })
       .catch((err) => console.log("error"));
 
@@ -28,7 +25,7 @@ const OrderDetails = (props) => {
 
   return (
     <>
-      {OrderDetails ? (
+      {
         <>
           <div>
             <label>Order Id</label>
@@ -79,7 +76,7 @@ const OrderDetails = (props) => {
             </table>
           </div>
         </>
-      ) : null}
+      }
     </>
   );
 };

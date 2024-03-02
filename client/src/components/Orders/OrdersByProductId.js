@@ -3,7 +3,7 @@ import axios from "axios";
 
 const OrdersByProductId = (props) => {
   const [orderListByPorductId, setOrderListByPorductId] = useState([]);
-  const [productId, setProductId] = useState(props.productId);
+  const productId = props.productId;
 
   useEffect(() => {
     axios

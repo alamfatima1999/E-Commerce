@@ -3,13 +3,11 @@ import axios from "axios";
 import OrdersByProductId from "../Orders/OrdersByProductId";
 
 const ProductDetails = (props) => {
-  // const { productId } = props.product;
   const [id, setId] = useState(props.productId);
   const [productDetails, setProductDetails] = useState(true);
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState(0);
   const [productDesc, setProductDesc] = useState("");
-  // const [createdDate, setCreatedDate] = useState("");
 
   useEffect(() => {
     axios

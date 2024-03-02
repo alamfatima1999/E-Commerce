@@ -4,23 +4,34 @@ import ShoppingCart from "../ShopingCart/ShoppingCart";
 
 const ProductListCustomer = (props) => {
   const [productList, setProductList] = useState([]);
-  // const [cartProduct, setCartProduct] = useState(null);
-  const [productQuantity, setProductQuantity] = useState(0);
   const [cartProducts, setCartProducts] = useState([]);
+  const customerId = sessionStorage.getItem("customerId");
 
   const addToCart = (product) => {
-    let flag = false;
-    let updatedCartList = cartProducts.map((productInCart) => {
-      if (productInCart.productId == product.productId) {
-        productInCart.quantity = product.quantity;
-        flag = true;
-      }
-      return productInCart;
-    });
-    if (flag === false) {
-      updatedCartList = [...cartProducts, product];
+    if (product.quantity > 0) {
+      let flag = false;
+      let updatedCartList = cartProducts.map((productInCart) => {
+        if (productInCart.productId == product.productId) {
+          productInCart.quantity = product.quantity;
+          flag = true;
+        }
+        return productInCart;
+      });
+      let productId = product.productId;
+      let quantity = product.quantity;
+      // let customerId = props.customerId;
+      let updatedProduct = { customerId, productId, quantity, flag };
+
+      axios
+        .post("http://localhost:3001/add/to/cart", { ...updatedProduct })
+        .then((res) => {
+          if (flag === false) {
+            updatedCartList = [...cartProducts, { ...product }];
+          }
+          setCartProducts(updatedCartList);
+        })
+        .catch((res) => console.log("Error"));
     }
-    setCartProducts(updatedCartList);
   };
 
   useEffect(() => {
@@ -99,7 +110,7 @@ const ProductListCustomer = (props) => {
           </table>
         </div>
       }
-      <ShoppingCart cartProducts={cartProducts} />
+      <ShoppingCart cartProducts={cartProducts} customerId={customerId} />
     </>
   );
 };
