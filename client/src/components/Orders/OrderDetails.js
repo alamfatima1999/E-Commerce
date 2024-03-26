@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { getBaseUrl } from "../../configuration";
 
 const OrderDetails = (props) => {
   const orderId = props.orderId;
@@ -7,15 +8,16 @@ const OrderDetails = (props) => {
   const [productsInOrder, setProductsInOrder] = useState([]);
 
   useEffect(() => {
+    let URL = `${getBaseUrl()}api/orders/${orderId}`;
     axios
-      .get("http://localhost:3001/order/detail/" + orderId)
+      .get(URL)
       .then((res) => {
         setOrder(res.data[0]);
       })
       .catch((err) => console.log("error"));
-
+    let productsByOrderURL = `${getBaseUrl()}api/orders/getProductsByOrder/${orderId}`;
     axios
-      .get("http://localhost:3001/getProductsByOrder/" + orderId)
+      .get(productsByOrderURL)
       .then((res) => {
         console.log(res.data);
         setProductsInOrder(res.data);

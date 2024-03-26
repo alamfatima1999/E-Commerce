@@ -1,0 +1,69 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .login-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px; /* Adjust the width as needed */
+  }
+  
+  .login-title {
+    color: #333;
+  }
+  
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  .form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+    text-align: left; /* Align text to the left */
+  }
+  
+  form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 8px; /* Added margin-bottom to separate email and password fields */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .login-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .new-user {
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: underline;
+  }
+  
+  /* Add additional styles as needed */
+  

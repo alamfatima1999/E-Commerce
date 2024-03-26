@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ShoppingCart from "../ShopingCart/ShoppingCart";
+import { getBaseUrl } from "../../configuration";
 
 const ProductListCustomer = (props) => {
   const [productList, setProductList] = useState([]);
@@ -9,8 +10,9 @@ const ProductListCustomer = (props) => {
   const [address, setAddress] = useState("");
 
   useEffect(() => {
+    let URL = `${getBaseUrl()}api/products/`;
     axios
-      .get("http://localhost:3001/")
+      .get(URL)
       .then((res) => {
         console.log(res.data);
         res.data.forEach((product) => {
@@ -37,8 +39,9 @@ const ProductListCustomer = (props) => {
       // let customerId = props.customerId;
       let updatedProduct = { customerId, productId, quantity, flag };
       console.log("Updated Product", updatedProduct);
+      let URL = `${getBaseUrl()}api/shoppingCart/addProduct`;
       axios
-        .post("http://localhost:3001/add/to/cart", { ...updatedProduct })
+        .post(URL, { ...updatedProduct })
         .then((res) => {
           if (flag === false) {
             updatedCartList = [...cartProducts, { ...product }];
@@ -56,10 +59,9 @@ const ProductListCustomer = (props) => {
   };
 
   const removeProduct = (productId) => {
+    let URL = `${getBaseUrl()}api/shoppingCart/removeFromCart/${productId}/${customerId}`;
     axios
-      .delete(
-        "http://localhost:3001/remove/from/cart/" + productId + "/" + customerId
-      )
+      .delete(URL)
       .then((res) => {
         console.log("Deleted successfully");
         let updatedCartList = cartProducts.filter((product) => {
@@ -85,13 +87,11 @@ const ProductListCustomer = (props) => {
   const buyProducts = () => {
     if (address != null) {
       let customerPayload = { customerId, address };
-
-      axios
-        .post("http://localhost:3001/buy", { ...customerPayload })
-        .then((res) => {
-          setCartProducts([]);
-          alert("order placed successfully");
-        });
+      let URL = `${getBaseUrl()}api/shoppingCart/buy`;
+      axios.post(URL, { ...customerPayload }).then((res) => {
+        setCartProducts([]);
+        alert("order placed successfully");
+      });
     } else {
       alert("Please enter your address");
     }

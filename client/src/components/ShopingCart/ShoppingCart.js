@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { getBaseUrl } from "../../configuration";
 
 const ShoppingCart = (props) => {
   const [cartProducts, setCartProducts] = useState(props.cartProducts);
@@ -13,8 +14,9 @@ const ShoppingCart = (props) => {
   // }, [props.cartProducts]);
 
   useEffect(() => {
+    let URL = `${getBaseUrl()}api/shoppingCart/${customerId}`;
     axios
-      .get("http://localhost:3001/shopping/cart/" + customerId)
+      .get(URL)
       .then((res) => {
         console.log(res.data);
         let productsInCart = res.data;

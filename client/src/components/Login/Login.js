@@ -2,6 +2,8 @@ import React, { Component, useState } from "react";
 import axios from "axios";
 import Customer from "../Customer/Customer";
 import AdminContainer from "../Admin/AdminContainer";
+import "./Login.css";
+import { getBaseUrl } from "../../configuration";
 
 function Login(props) {
   let [uname, setUname] = useState("");
@@ -20,8 +22,9 @@ function Login(props) {
         email: uname,
         password: password,
       };
+      let URL = `${getBaseUrl()}api/user/login`;
       axios
-        .post("http://localhost:3001/login", { ...user })
+        .post(URL, { ...user })
         .then((res) => {
           console.log(res);
           if (res.data.length > 0) {
@@ -60,34 +63,37 @@ function Login(props) {
   }
 
   return (
-    <>
+    <div class="form-container">
       {!isUserAuthenticated ? (
-        <>
-          <h1>Login</h1>
-          <div>
-            <label>E-Mail</label>
+        <div class="login-container">
+          <h1 class="login-title">Login</h1>
+          <div class="form-group">
+            <label class="form-label">E-Mail</label>
             <input type="text" value={uname} onChange={changeName}></input>
           </div>
-          <div>
-            <label>Password</label>
+          <div class="form-group">
+            <label class="form-label">Password</label>
             <input
               type="password"
               value={password}
               onChange={changePass}
             ></input>
           </div>
-          <button onClick={handleClick}>Login</button>
-          <div onClick={() => props.navigateToRegisterPage()}>
-            {" "}
-            Is New User{" "}
+          <div class="button-container">
+            <button class="login-button" onClick={handleClick}>
+              Login
+            </button>
           </div>
-        </>
+          <div class="new-user" onClick={() => props.navigateToRegisterPage()}>
+            Is New User
+          </div>
+        </div>
       ) : isAdmin ? (
         <AdminContainer />
       ) : (
         <Customer customerId={customerId} />
       )}
-    </>
+    </div>
   );
 }
 

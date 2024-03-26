@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import OrdersByProductId from "../Orders/OrdersByProductId";
+import { getBaseUrl } from "../../configuration";
 
 const ProductDetails = (props) => {
   const [id, setId] = useState(props.productId);
@@ -10,8 +11,9 @@ const ProductDetails = (props) => {
   const [productDesc, setProductDesc] = useState("");
 
   useEffect(() => {
+    let URL = `${getBaseUrl()}api/products/${id}`;
     axios
-      .get("http://localhost:3001/product/detail/" + id)
+      .get(URL)
       .then((res) => {
         console.log(res);
         let data = res.data;
@@ -33,11 +35,10 @@ const ProductDetails = (props) => {
       price: productPrice,
       description: productDesc,
     };
-    axios
-      .post("http://localhost:3001/product/update", { ...productData })
-      .then((res) => {
-        console.log("Successful");
-      });
+    let URL = `${getBaseUrl()}api/products/update`;
+    axios.post(URL, { ...productData }).then((res) => {
+      console.log("Successful");
+    });
   };
 
   return (

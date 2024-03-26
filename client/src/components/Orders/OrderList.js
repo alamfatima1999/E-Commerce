@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import { getBaseUrl } from "../../configuration";
 
 const OrderList = (props) => {
   const [orders, setorders] = useState([]);
 
   useEffect(() => {
+    let URL = `${getBaseUrl()}api/orders/`;
     axios
-      .get("http://localhost:3001/orders")
+      .get(URL)
       .then((res) => {
         const data = res.data;
         console.log(data);

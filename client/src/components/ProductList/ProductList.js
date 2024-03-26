@@ -1,6 +1,7 @@
 //This page contains Product Creation, Fetch and deletion.
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { getBaseUrl } from "../../configuration";
 
 const ProductList = (props) => {
   const [products, setProducts] = useState([]);
@@ -13,8 +14,9 @@ const ProductList = (props) => {
     let price = productPrice;
     let description = productDesc;
     if (name !== "" && price > 0 && description !== "") {
+      let URL = `${getBaseUrl()}api/products/create`;
       axios
-        .post("http://localhost:3001/create", { name, price, description })
+        .post(URL, { name, price, description })
         .then((res) => {
           console.log("Product added");
           fetchProducts();
@@ -32,8 +34,9 @@ const ProductList = (props) => {
   };
 
   const deleteProduct = (productId) => {
+    let URL = `${getBaseUrl()}api/products/delete/${productId}`;
     axios
-      .delete("http://localhost:3001/delete/product/" + productId)
+      .delete(URL)
       .then((res) => {
         console.log("Deletion successful");
         fetchProducts();
@@ -42,8 +45,9 @@ const ProductList = (props) => {
   };
 
   const fetchProducts = () => {
+    let URL = `${getBaseUrl()}api/products`;
     axios
-      .get("http://localhost:3001/")
+      .get(URL)
       .then((res) => {
         const data = res.data;
         console.log(data);

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { getBaseUrl } from "../../configuration";
 
 function Register(props) {
   let [email, setEmail] = useState("");
@@ -17,8 +18,9 @@ function Register(props) {
       lname: lname,
     };
     if (email != "" && pass != "" && fname != "" && lname != "") {
+      let URL = `${getBaseUrl()}api/user/register`;
       axios
-        .post("http://localhost:3001/register", { ...newUser })
+        .post(URL, { ...newUser })
         .then((res) => {
           if (res.data != null) {
             console.log("User registered successfully");

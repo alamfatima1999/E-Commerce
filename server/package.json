@@ -4,14 +4,17 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "debug": "node --inspect server.js"
+    "start": "nodemon app.js",
+    "start-dev": "nodemon server.js",
+    "debug": "node --inspect server.js",
+    "debug-app": "node --inspect app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.17.1",
     "mysql": "^2.18.1"
   },

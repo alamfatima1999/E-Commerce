@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { getBaseUrl } from "../../configuration";
 
 const CustomerOrders = (props) => {
   const [pastOrders, setPastOrders] = useState([]);
   const customerId = sessionStorage.getItem("customerId");
 
   useEffect(() => {
+    let URL = `${getBaseUrl()}api/orders/getMyPastOrders/${customerId}`;
     axios
-      .get("http://localhost:3001/my/past/orders/" + customerId)
+      .get(URL)
       .then((res) => {
         console.log(res.data);
         setPastOrders(res.data);

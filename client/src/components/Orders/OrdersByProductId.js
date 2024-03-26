@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { getBaseUrl } from "../../configuration";
 
 const OrdersByProductId = (props) => {
   const [orderListByPorductId, setOrderListByPorductId] = useState([]);
   const productId = props.productId;
 
   useEffect(() => {
+    let URL = `${getBaseUrl()}api/products/getOrdersByProduct/${productId}`;
     axios
-      .get("http://localhost:3001/getOrdersByProduct/" + productId)
+      .get(URL)
       .then((res) => {
         console.log(res);
         setOrderListByPorductId(res.data);
